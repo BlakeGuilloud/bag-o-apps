@@ -14,15 +14,36 @@ class TodoContainer extends React.Component {
     editTodo: React.PropTypes.func,
   };
 
+  state = {
+    title: '',
+  }
+
   componentDidMount() {
     this.props.todoActions.fetchTodos();
   }
 
-  render() {
-    console.log('this props', this.props);
-    const props = {};
+  handleChange = (event) => {
+    const newState = {};
+    newState[event.target.id] = event.target.value;
+    this.setState(newState);
+  }
 
-    return (<TodoComponent />);
+  createTodo = (event) => {
+    event.preventDefault();
+    const todo = {
+      title: this.state.title,
+    }
+    this.props.todoActions.createTodo(todo);
+  }
+
+  render() {
+    const props = {
+      todos: this.props.todos,
+      handleChange: this.handleChange,
+      createTodo: this.createTodo,
+    };
+
+    return (<TodoComponent {...props} />);
   }
 }
 

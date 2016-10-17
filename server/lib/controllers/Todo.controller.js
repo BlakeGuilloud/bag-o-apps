@@ -41,10 +41,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function postTodo(req, res) {
+  console.log('req body', req.body);
   _promise2.default.resolve().then(function () {
     return _get__('todoService').postTodo(req.body);
   }).then(function (todo) {
     return res.status(200).json(todo);
+  }).catch(function (err) {
+    return console.log(err);
   });
 }
 
@@ -53,6 +56,8 @@ function getTodos(req, res) {
     return _get__('todoService').getTodos();
   }).then(function (todos) {
     return res.status(200).json(todos);
+  }).catch(function (err) {
+    return console.log(err);
   });
 }
 

@@ -46,6 +46,7 @@
   ],
   "rules": {
     "arrow-body-style": [0, "never"],
+    "arrow-parens": [0, "never"],
     "generator-star-spacing": 0,
     "key-spacing": [2, { mode: minimum }],
     "no-multi-spaces": [2, { exceptions: { ImportDeclaration: true, VariableDeclarator: true } }],

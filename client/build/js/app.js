@@ -38331,9 +38331,9 @@
 	  return function (dispatch) {
 	    dispatch(_get__('requestData')());
 	    return _get__('axios').get('/api/users').then(function (response) {
-	      return dispatch(_get__('receiveUsers')(response.data));
+	      dispatch(_get__('receiveUsers')(response.data));
 	    }).catch(function (err) {
-	      return console.log(err);
+	      console.log(err);
 	    });
 	  };
 	}
@@ -41374,7 +41374,7 @@
 /* 568 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -41408,16 +41408,41 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Todo = function Todo(props) {
-	  return _get__('React').createElement(
-	    'div',
+	  var todos = props.todos;
+	  var createTodo = props.createTodo;
+	  var handleChange = props.handleChange;
+
+
+	  return _get__("React").createElement(
+	    "div",
 	    null,
-	    'Hello from Todo'
+	    _get__("React").createElement(
+	      "div",
+	      null,
+	      todos.map(function (todo, idx) {
+	        return _get__("React").createElement(
+	          "div",
+	          { key: idx },
+	          todo.title
+	        );
+	      })
+	    ),
+	    _get__("React").createElement(
+	      "form",
+	      null,
+	      _get__("React").createElement("input", { onChange: handleChange, type: "text", id: "title" }),
+	      _get__("React").createElement(
+	        "button",
+	        { onClick: createTodo },
+	        "Create Todo"
+	      )
+	    )
 	  );
 	};
 
-	_get__('Todo').propTypes = {};
+	_get__("Todo").propTypes = {};
 
-	exports.default = _get__('Todo');
+	exports.default = _get__("Todo");
 
 	var _RewiredData__ = (0, _create2.default)(null);
 
@@ -41458,10 +41483,10 @@
 
 	function _get_original__(variableName) {
 	  switch (variableName) {
-	    case 'Todo':
+	    case "Todo":
 	      return Todo;
 
-	    case 'React':
+	    case "React":
 	      return _react2.default;
 	  }
 
@@ -41493,7 +41518,7 @@
 	}
 
 	function _set__(variableName, value) {
-	  if ((typeof variableName === 'undefined' ? 'undefined' : (0, _typeof3.default)(variableName)) === 'object') {
+	  if ((typeof variableName === "undefined" ? "undefined" : (0, _typeof3.default)(variableName)) === 'object') {
 	    (0, _keys2.default)(variableName).forEach(function (name) {
 	      _RewiredData__[name] = variableName[name];
 	    });
@@ -41541,7 +41566,7 @@
 	  };
 	}
 
-	var _typeOfOriginalExport = typeof Todo === 'undefined' ? 'undefined' : (0, _typeof3.default)(Todo);
+	var _typeOfOriginalExport = typeof Todo === "undefined" ? "undefined" : (0, _typeof3.default)(Todo);
 
 	function addNonEnumerableProperty(name, value) {
 	  (0, _defineProperty2.default)(Todo, name, {
@@ -42710,8 +42735,29 @@
 	  (0, _inherits3.default)(TodoContainer, _get__$Component);
 
 	  function TodoContainer() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
 	    (0, _classCallCheck3.default)(this, TodoContainer);
-	    return (0, _possibleConstructorReturn3.default)(this, (TodoContainer.__proto__ || (0, _getPrototypeOf2.default)(TodoContainer)).apply(this, arguments));
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = TodoContainer.__proto__ || (0, _getPrototypeOf2.default)(TodoContainer)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	      title: ''
+	    }, _this.handleChange = function (event) {
+	      var newState = {};
+	      newState[event.target.id] = event.target.value;
+	      _this.setState(newState);
+	    }, _this.createTodo = function (event) {
+	      event.preventDefault();
+	      var todo = {
+	        title: _this.state.title
+	      };
+	      _this.props.todoActions.createTodo(todo);
+	    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
 	  }
 
 	  (0, _createClass3.default)(TodoContainer, [{
@@ -42722,10 +42768,13 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log('this props', this.props);
-	      var props = {};
+	      var props = {
+	        todos: this.props.todos,
+	        handleChange: this.handleChange,
+	        createTodo: this.createTodo
+	      };
 
-	      return _get__('React').createElement(_get__('TodoComponent'), null);
+	      return _get__('React').createElement(_get__('TodoComponent'), props);
 	    }
 	  }]);
 	  return TodoContainer;
@@ -42964,6 +43013,7 @@
 	var _create2 = _interopRequireDefault(_create);
 
 	exports.fetchTodos = fetchTodos;
+	exports.createTodo = createTodo;
 
 	var _reduxActions = __webpack_require__(363);
 
@@ -42987,6 +43037,16 @@
 	    dispatch(_get__('requestData')());
 	    return _get__('axios').get('/api/todos').then(function (response) {
 	      return dispatch(_get__('receiveTodos')(response.data));
+	    }).catch(function (err) {
+	      return console.log(err);
+	    });
+	  };
+	}
+
+	function createTodo(todo) {
+	  return function (dispatch) {
+	    return _get__('axios').post('/api/todos', todo).then(function (response) {
+	      return console.log(response.data);
 	    }).catch(function (err) {
 	      return console.log(err);
 	    });

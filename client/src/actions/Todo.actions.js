@@ -13,3 +13,11 @@ export function fetchTodos() {
       .catch((err) => console.log(err));
   };
 }
+
+export function createTodo(todo) {
+  return (dispatch) => {
+    return axios.post('/api/todos', todo)
+      .then((response) => console.log(response.data))
+      .catch((err) => console.log(err));
+  };
+}

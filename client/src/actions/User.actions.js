@@ -9,7 +9,11 @@ export function fetchUsers() {
   return (dispatch) => {
     dispatch(requestData());
     return axios.get('/api/users')
-      .then((response) => dispatch(receiveUsers(response.data)))
-      .catch((err) => console.log(err));
+      .then((response) => {
+        dispatch(receiveUsers(response.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 }
