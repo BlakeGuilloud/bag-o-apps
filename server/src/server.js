@@ -33,7 +33,7 @@ const app = express();
 app.set('appPath', path.join('', 'client'));
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded());
 app.use(express.static(`${app.get('appPath')}/build`));
 
 app.use(session({ secret: 'yea' }));

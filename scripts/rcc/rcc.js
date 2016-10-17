@@ -9,7 +9,7 @@ const path        = require('path');
 // --------------------------
 const argName     = process.argv[2];
 const argType     = process.argv[3];
-const dirPath     = 'client/app';
+const dirPath     = 'client/src';
 
 if (argName && argType) {
   createFile(argName, argType, dirPath);

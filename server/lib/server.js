@@ -87,7 +87,7 @@ var app = _get__('express')();
 _get__('app').set('appPath', _get__('path').join('', 'client'));
 _get__('app').use(_get__('cors')());
 _get__('app').use(_get__('bodyParser').json());
-_get__('app').use(_get__('bodyParser').urlencoded({ extended: true }));
+_get__('app').use(_get__('bodyParser').urlencoded());
 _get__('app').use(_get__('express').static(_get__('app').get('appPath') + '/build'));
 
 _get__('app').use(_get__('session')({ secret: 'yea' }));

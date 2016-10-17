@@ -1,4 +1,4 @@
-import { App, User, Home, Login } from './containers';
+import { App, User, Home, Login, Me, Todo } from './containers';
 
 const routes = {
   path: '/',
@@ -7,8 +7,9 @@ const routes = {
   childRoutes: [
     { path: 'home',
       component: Home,
+      indexRoute: { component: Me },
       childRoutes: [
-        { path: 'todo', component: User },
+        { path: 'todo', component: Todo },
         { path: 'users', component: User },
       ],
     },

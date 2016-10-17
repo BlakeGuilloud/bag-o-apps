@@ -1,9 +1,9 @@
 import React                  from 'react';
 import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Header }             from './';
+import { MeComponent }        from '../components';
 
-class Home extends React.Component {
+class Me extends React.Component {
 
   static propTypes = {
     children: React.PropTypes.node,
@@ -14,12 +14,7 @@ class Home extends React.Component {
   render() {
     const props = {};
 
-    return (
-      <div>
-        <Header />
-        {this.props.children}
-      </div>
-    );
+    return (<MeComponent />);
   }
 }
 
@@ -32,4 +27,4 @@ function mapDispatchToProps(dispatch) {
   return {};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Me);
