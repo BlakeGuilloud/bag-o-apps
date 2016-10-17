@@ -81,7 +81,7 @@ var getUsers = exports.getUsers = function () {
             users = void 0;
             _context2.prev = 1;
             _context2.next = 4;
-            return _get__('User').query();
+            return _get__('User').query().eager('todos');
 
           case 4:
             users = _context2.sent;

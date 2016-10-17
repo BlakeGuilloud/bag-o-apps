@@ -14,8 +14,14 @@ Todo.jsonSchema = {
   properties: {
     id: { type: 'integer' },
     title: { type: 'string' },
-    userId: { type: 'integer' },
-    completed: { type: 'false' },
+    userId: {
+      type: 'integer',
+      default: 1
+    },
+    completed: {
+      type: 'boolean',
+      default: false
+    },
   },
 };
 

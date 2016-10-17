@@ -15,6 +15,7 @@ import session    from 'express-session';
 // ------------------------------
 import authRouter  from './routers/Auth.router';
 import userRouter  from './routers/User.router';
+import todoRouter  from './routers/Todo.router';
 
 // ------------------------------
 // Establish Knex Connection
@@ -44,6 +45,7 @@ app.use(passport.session());
 // Configure Routes
 // ------------------------------
 app.use('/api/users', userRouter);
+app.use('/api/todos', todoRouter);
 app.use('/auth', authRouter);
 
 // We want any routes that are not prefaced with api to be sent to client.

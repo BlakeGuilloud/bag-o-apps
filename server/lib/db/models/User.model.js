@@ -50,6 +50,17 @@ _get__('User').jsonSchema = {
   }
 };
 
+_get__('User').relationMappings = {
+  todos: {
+    relation: _get__('Model').HasManyRelation,
+    modelClass: _get__('path').join(__dirname, 'Todo.model'),
+    join: {
+      from: 'Users.id',
+      to: 'Todos.userId'
+    }
+  }
+};
+
 exports.default = _get__('User');
 
 var _RewiredData__ = (0, _create2.default)(null);
@@ -96,6 +107,9 @@ function _get_original__(variableName) {
 
     case 'User':
       return User;
+
+    case 'path':
+      return _path2.default;
   }
 
   return undefined;

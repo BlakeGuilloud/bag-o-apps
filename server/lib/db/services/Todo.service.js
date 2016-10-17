@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.__RewireAPI__ = exports.__ResetDependency__ = exports.__set__ = exports.__Rewire__ = exports.__GetDependency__ = exports.__get__ = undefined;
+exports.__RewireAPI__ = exports.__ResetDependency__ = exports.__set__ = exports.__Rewire__ = exports.__GetDependency__ = exports.__get__ = exports.getTodos = exports.postTodo = undefined;
 
 var _keys = require('babel-runtime/core-js/object/keys');
 
@@ -21,100 +21,107 @@ var _create = require('babel-runtime/core-js/object/create');
 
 var _create2 = _interopRequireDefault(_create);
 
-var _express = require('express');
+var _regenerator = require('babel-runtime/regenerator');
 
-var _express2 = _interopRequireDefault(_express);
+var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _bodyParser = require('body-parser');
+var _promise = require('babel-runtime/core-js/promise');
 
-var _bodyParser2 = _interopRequireDefault(_bodyParser);
+var _promise2 = _interopRequireDefault(_promise);
 
-var _objection = require('objection');
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
-var _cors = require('cors');
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _cors2 = _interopRequireDefault(_cors);
+var postTodo = exports.postTodo = function () {
+  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(todo) {
+    var newTodo;
+    return _regenerator2.default.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            newTodo = void 0;
+            _context.prev = 1;
+            _context.next = 4;
+            return _get__('Todo').query().insertWithRelated(todo);
 
-var _path = require('path');
+          case 4:
+            newTodo = _context.sent;
+            _context.next = 10;
+            break;
 
-var _path2 = _interopRequireDefault(_path);
+          case 7:
+            _context.prev = 7;
+            _context.t0 = _context['catch'](1);
+            return _context.abrupt('return', _promise2.default.reject(_context.t0));
 
-var _passport = require('passport');
+          case 10:
+            return _context.abrupt('return', _promise2.default.resolve(newTodo));
 
-var _passport2 = _interopRequireDefault(_passport);
+          case 11:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, this, [[1, 7]]);
+  }));
 
-var _expressSession = require('express-session');
+  return function postTodo(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
 
-var _expressSession2 = _interopRequireDefault(_expressSession);
+var getTodos = exports.getTodos = function () {
+  var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
+    var todos;
+    return _regenerator2.default.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            todos = void 0;
+            _context2.prev = 1;
+            _context2.next = 4;
+            return _get__('Todo').query();
 
-var _Auth = require('./routers/Auth.router');
+          case 4:
+            todos = _context2.sent;
+            _context2.next = 10;
+            break;
 
-var _Auth2 = _interopRequireDefault(_Auth);
+          case 7:
+            _context2.prev = 7;
+            _context2.t0 = _context2['catch'](1);
+            return _context2.abrupt('return', _promise2.default.reject(_context2.t0));
 
-var _User = require('./routers/User.router');
+          case 10:
+            if (todos) {
+              _context2.next = 12;
+              break;
+            }
 
-var _User2 = _interopRequireDefault(_User);
+            return _context2.abrupt('return', _promise2.default.reject('You has no todo.'));
 
-var _Todo = require('./routers/Todo.router');
+          case 12:
+            return _context2.abrupt('return', _promise2.default.resolve(todos));
+
+          case 13:
+          case 'end':
+            return _context2.stop();
+        }
+      }
+    }, _callee2, this, [[1, 7]]);
+  }));
+
+  return function getTodos() {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+var _Todo = require('../models/Todo.model');
 
 var _Todo2 = _interopRequireDefault(_Todo);
 
-var _knex = require('knex');
-
-var _knex2 = _interopRequireDefault(_knex);
-
-var _knexfile = require('./db/knexfile.js');
-
-var _knexfile2 = _interopRequireDefault(_knexfile);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// ------------------------------
-// Establish Knex Connection
-// ------------------------------
-// ------------------------------
-// Import Dependencies
-// ------------------------------
-var connection = _get__('knex')(_get__('knexConfig'));
-
-// ------------------------------
-// Import Routers
-// ------------------------------
-
-_get__('Model').knex(_get__('connection'));
-
-// ------------------------------
-// Configure Express
-// ------------------------------
-var app = _get__('express')();
-
-_get__('app').set('appPath', _get__('path').join('', 'client'));
-_get__('app').use(_get__('cors')());
-_get__('app').use(_get__('bodyParser').json());
-_get__('app').use(_get__('bodyParser').urlencoded());
-_get__('app').use(_get__('express').static(_get__('app').get('appPath') + '/build'));
-
-_get__('app').use(_get__('session')({ secret: 'yea' }));
-_get__('app').use(_get__('passport').initialize());
-_get__('app').use(_get__('passport').session());
-
-// ------------------------------
-// Configure Routes
-// ------------------------------
-_get__('app').use('/api/users', _get__('userRouter'));
-_get__('app').use('/api/todos', _get__('todoRouter'));
-_get__('app').use('/auth', _get__('authRouter'));
-
-// We want any routes that are not prefaced with api to be sent to client.
-_get__('app').route('/*').get(function (req, res) {
-  return res.sendFile(_get__('path').resolve(_get__('app').get('appPath') + '/index.html'));
-});
-
-// ------------------------------
-// Initialize Server
-// ------------------------------
-var port = process.env.PORT || 8080;
-_get__('app').listen(_get__('port'));
 
 var _RewiredData__ = (0, _create2.default)(null);
 
@@ -155,50 +162,8 @@ function _get__(variableName) {
 
 function _get_original__(variableName) {
   switch (variableName) {
-    case 'knex':
-      return _knex2.default;
-
-    case 'knexConfig':
-      return _knexfile2.default;
-
-    case 'Model':
-      return _objection.Model;
-
-    case 'connection':
-      return connection;
-
-    case 'express':
-      return _express2.default;
-
-    case 'app':
-      return app;
-
-    case 'path':
-      return _path2.default;
-
-    case 'cors':
-      return _cors2.default;
-
-    case 'bodyParser':
-      return _bodyParser2.default;
-
-    case 'session':
-      return _expressSession2.default;
-
-    case 'passport':
-      return _passport2.default;
-
-    case 'userRouter':
-      return _User2.default;
-
-    case 'todoRouter':
+    case 'Todo':
       return _Todo2.default;
-
-    case 'authRouter':
-      return _Auth2.default;
-
-    case 'port':
-      return port;
   }
 
   return undefined;

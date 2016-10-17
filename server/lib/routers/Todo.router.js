@@ -5,6 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.__RewireAPI__ = exports.__ResetDependency__ = exports.__set__ = exports.__Rewire__ = exports.__GetDependency__ = exports.__get__ = undefined;
 
+var _isExtensible = require('babel-runtime/core-js/object/is-extensible');
+
+var _isExtensible2 = _interopRequireDefault(_isExtensible);
+
 var _keys = require('babel-runtime/core-js/object/keys');
 
 var _keys2 = _interopRequireDefault(_keys);
@@ -25,96 +29,20 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _bodyParser = require('body-parser');
+var _Todo = require('../controllers/Todo.controller');
 
-var _bodyParser2 = _interopRequireDefault(_bodyParser);
+var todoController = _interopRequireWildcard(_Todo);
 
-var _objection = require('objection');
-
-var _cors = require('cors');
-
-var _cors2 = _interopRequireDefault(_cors);
-
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
-
-var _passport = require('passport');
-
-var _passport2 = _interopRequireDefault(_passport);
-
-var _expressSession = require('express-session');
-
-var _expressSession2 = _interopRequireDefault(_expressSession);
-
-var _Auth = require('./routers/Auth.router');
-
-var _Auth2 = _interopRequireDefault(_Auth);
-
-var _User = require('./routers/User.router');
-
-var _User2 = _interopRequireDefault(_User);
-
-var _Todo = require('./routers/Todo.router');
-
-var _Todo2 = _interopRequireDefault(_Todo);
-
-var _knex = require('knex');
-
-var _knex2 = _interopRequireDefault(_knex);
-
-var _knexfile = require('./db/knexfile.js');
-
-var _knexfile2 = _interopRequireDefault(_knexfile);
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// ------------------------------
-// Establish Knex Connection
-// ------------------------------
-// ------------------------------
-// Import Dependencies
-// ------------------------------
-var connection = _get__('knex')(_get__('knexConfig'));
+var router = _get__('express').Router();
 
-// ------------------------------
-// Import Routers
-// ------------------------------
+_get__('router').get('/', _get__('todoController').getTodos);
+_get__('router').post('/', _get__('todoController').postTodo);
 
-_get__('Model').knex(_get__('connection'));
-
-// ------------------------------
-// Configure Express
-// ------------------------------
-var app = _get__('express')();
-
-_get__('app').set('appPath', _get__('path').join('', 'client'));
-_get__('app').use(_get__('cors')());
-_get__('app').use(_get__('bodyParser').json());
-_get__('app').use(_get__('bodyParser').urlencoded());
-_get__('app').use(_get__('express').static(_get__('app').get('appPath') + '/build'));
-
-_get__('app').use(_get__('session')({ secret: 'yea' }));
-_get__('app').use(_get__('passport').initialize());
-_get__('app').use(_get__('passport').session());
-
-// ------------------------------
-// Configure Routes
-// ------------------------------
-_get__('app').use('/api/users', _get__('userRouter'));
-_get__('app').use('/api/todos', _get__('todoRouter'));
-_get__('app').use('/auth', _get__('authRouter'));
-
-// We want any routes that are not prefaced with api to be sent to client.
-_get__('app').route('/*').get(function (req, res) {
-  return res.sendFile(_get__('path').resolve(_get__('app').get('appPath') + '/index.html'));
-});
-
-// ------------------------------
-// Initialize Server
-// ------------------------------
-var port = process.env.PORT || 8080;
-_get__('app').listen(_get__('port'));
+exports.default = _get__('router');
 
 var _RewiredData__ = (0, _create2.default)(null);
 
@@ -155,50 +83,14 @@ function _get__(variableName) {
 
 function _get_original__(variableName) {
   switch (variableName) {
-    case 'knex':
-      return _knex2.default;
-
-    case 'knexConfig':
-      return _knexfile2.default;
-
-    case 'Model':
-      return _objection.Model;
-
-    case 'connection':
-      return connection;
-
     case 'express':
       return _express2.default;
 
-    case 'app':
-      return app;
+    case 'router':
+      return router;
 
-    case 'path':
-      return _path2.default;
-
-    case 'cors':
-      return _cors2.default;
-
-    case 'bodyParser':
-      return _bodyParser2.default;
-
-    case 'session':
-      return _expressSession2.default;
-
-    case 'passport':
-      return _passport2.default;
-
-    case 'userRouter':
-      return _User2.default;
-
-    case 'todoRouter':
-      return _Todo2.default;
-
-    case 'authRouter':
-      return _Auth2.default;
-
-    case 'port':
-      return port;
+    case 'todoController':
+      return _filterWildcardImport__(todoController);
   }
 
   return undefined;
@@ -277,10 +169,41 @@ function _with__(object) {
   };
 }
 
+var _typeOfOriginalExport = typeof router === 'undefined' ? 'undefined' : (0, _typeof3.default)(router);
+
+function addNonEnumerableProperty(name, value) {
+  (0, _defineProperty2.default)(router, name, {
+    value: value,
+    enumerable: false,
+    configurable: true
+  });
+}
+
+if ((_typeOfOriginalExport === 'object' || _typeOfOriginalExport === 'function') && (0, _isExtensible2.default)(router)) {
+  addNonEnumerableProperty('__get__', _get__);
+  addNonEnumerableProperty('__GetDependency__', _get__);
+  addNonEnumerableProperty('__Rewire__', _set__);
+  addNonEnumerableProperty('__set__', _set__);
+  addNonEnumerableProperty('__reset__', _reset__);
+  addNonEnumerableProperty('__ResetDependency__', _reset__);
+  addNonEnumerableProperty('__with__', _with__);
+  addNonEnumerableProperty('__RewireAPI__', _RewireAPI__);
+}
+
+function _filterWildcardImport__() {
+  var wildcardImport = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var validPropertyNames = (0, _keys2.default)(wildcardImport).filter(function (propertyName) {
+    return propertyName !== '__get__' && propertyName !== '__set__' && propertyName !== '__reset__' && propertyName !== '__with__' && propertyName !== '__GetDependency__' && propertyName !== '__Rewire__' && propertyName !== '__ResetDependency__' && propertyName !== '__RewireAPI__';
+  });
+  return validPropertyNames.reduce(function (filteredWildcardImport, propertyName) {
+    filteredWildcardImport[propertyName] = wildcardImport[propertyName];
+    return filteredWildcardImport;
+  }, {});
+}
+
 exports.__get__ = _get__;
 exports.__GetDependency__ = _get__;
 exports.__Rewire__ = _set__;
 exports.__set__ = _set__;
 exports.__ResetDependency__ = _reset__;
 exports.__RewireAPI__ = _RewireAPI__;
-exports.default = _RewireAPI__;
