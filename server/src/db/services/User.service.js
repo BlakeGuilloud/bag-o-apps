@@ -14,7 +14,8 @@ export async function postUser(user) {
 export async function getUsers() {
   let users;
   try {
-    users = await User.query();
+    users = await User.query()
+      .eager('todos');
   } catch (err) {
     return Promise.reject(err);
   }

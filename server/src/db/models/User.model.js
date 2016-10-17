@@ -18,4 +18,15 @@ User.jsonSchema = {
   },
 };
 
+User.relationMappings = {
+  todos: {
+    relation: Model.HasManyRelation,
+    modelClass: path.join(__dirname, 'Todo.model'),
+    join: {
+      from: 'Users.id',
+      to: 'Todos.userId',
+    },
+  },
+};
+
 export default User;
