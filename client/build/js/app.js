@@ -42470,13 +42470,18 @@
 	    value: function render() {
 	      var props = {};
 
-	      return _get__('React').createElement(_get__('Todo'), null);
+	      return _get__('React').createElement(_get__('TodoComponent'), null);
 	    }
 	  }]);
 	  return TodoContainer;
 	}(_get__('React').Component);
 
-	TodoContainer.propTypes = {};
+	TodoContainer.propTypes = {
+	  todos: _get__('React').PropTypes.array,
+	  addTodo: _get__('React').PropTypes.func,
+	  deleteTodo: _get__('React').PropTypes.func,
+	  editTodo: _get__('React').PropTypes.func
+	};
 
 
 	function mapStateToProps(state) {
@@ -42547,8 +42552,8 @@
 	    case 'TodoContainer':
 	      return TodoContainer;
 
-	    case 'Todo':
-	      return _components.Todo;
+	    case 'TodoComponent':
+	      return _components.TodoComponent;
 	  }
 
 	  return undefined;
