@@ -37295,7 +37295,7 @@
 	  path: '/',
 	  component: _get__('App'),
 	  indexRoute: { component: _get__('Login') },
-	  childRoutes: [{ path: 'home',
+	  childRoutes: [{ path: ':userId',
 	    component: _get__('Home'),
 	    indexRoute: { component: _get__('Me') },
 	    childRoutes: [{ path: 'todo', component: _get__('Todo') }, { path: 'users', component: _get__('User') }]
@@ -40976,6 +40976,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Header = function Header(props) {
+	  console.log(props);
 	  return _get__('React').createElement(
 	    'div',
 	    null,
@@ -41647,8 +41648,9 @@
 	  return function (dispatch) {
 	    return _get__('axios').post('/auth/login', user).then(function (response) {
 	      return dispatch(_get__('setUser')(response.data));
-	    }).then(function () {
-	      return _get__('browserHistory').push('/home');
+	    }).then(function (user) {
+	      console.log('login user', user);
+	      _get__('browserHistory').push('/' + user.payload.id);
 	    }).catch(function (err) {
 	      return console.log(err);
 	    });

@@ -9,7 +9,10 @@ export function login(user) {
   return (dispatch) => {
     return axios.post('/auth/login', user)
       .then((response) => dispatch(setUser(response.data)))
-      .then(() => browserHistory.push('/home'))
+      .then((user) => {
+        console.log('login user', user);
+        browserHistory.push(`/${user.payload.id}`)
+      })
       .catch((err) => console.log(err));
   };
 }

@@ -5,7 +5,7 @@ const routes = {
   component: App,
   indexRoute: { component: Login },
   childRoutes: [
-    { path: 'home',
+    { path: ':userId',
       component: Home,
       indexRoute: { component: Me },
       childRoutes: [
