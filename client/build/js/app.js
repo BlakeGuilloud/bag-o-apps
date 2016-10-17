@@ -42668,10 +42668,6 @@
 
 	var _create2 = _interopRequireDefault(_create);
 
-	var _objectDestructuringEmpty2 = __webpack_require__(522);
-
-	var _objectDestructuringEmpty3 = _interopRequireDefault(_objectDestructuringEmpty2);
-
 	var _getPrototypeOf = __webpack_require__(523);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -42698,7 +42694,15 @@
 
 	var _reactRedux = __webpack_require__(79);
 
+	var _redux = __webpack_require__(119);
+
 	var _components = __webpack_require__(563);
+
+	var _Todo = __webpack_require__(574);
+
+	var TodoActions = _interopRequireWildcard(_Todo);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -42711,8 +42715,14 @@
 	  }
 
 	  (0, _createClass3.default)(TodoContainer, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.props.todoActions.fetchTodos();
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log('this props', this.props);
 	      var props = {};
 
 	      return _get__('React').createElement(_get__('TodoComponent'), null);
@@ -42730,13 +42740,17 @@
 
 
 	function mapStateToProps(state) {
-	  (0, _objectDestructuringEmpty3.default)(state);
+	  var todo = state.todo;
 
-	  return {};
+	  return {
+	    todos: todo.todos
+	  };
 	}
 
 	function mapDispatchToProps(dispatch) {
-	  return {};
+	  return {
+	    todoActions: _get__('bindActionCreators')(_get__('TodoActions'), dispatch)
+	  };
 	}
 
 	var _DefaultExportValue = _get__('connect')(_get__('mapStateToProps'), _get__('mapDispatchToProps'))(_get__('TodoContainer'));
@@ -42784,6 +42798,12 @@
 	  switch (variableName) {
 	    case 'React':
 	      return _react2.default;
+
+	    case 'bindActionCreators':
+	      return _redux.bindActionCreators;
+
+	    case 'TodoActions':
+	      return _filterWildcardImport__(TodoActions);
 
 	    case 'connect':
 	      return _reactRedux.connect;
@@ -42898,12 +42918,230 @@
 	  addNonEnumerableProperty('__RewireAPI__', _RewireAPI__);
 	}
 
+	function _filterWildcardImport__() {
+	  var wildcardImport = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	  var validPropertyNames = (0, _keys2.default)(wildcardImport).filter(function (propertyName) {
+	    return propertyName !== '__get__' && propertyName !== '__set__' && propertyName !== '__reset__' && propertyName !== '__with__' && propertyName !== '__GetDependency__' && propertyName !== '__Rewire__' && propertyName !== '__ResetDependency__' && propertyName !== '__RewireAPI__';
+	  });
+	  return validPropertyNames.reduce(function (filteredWildcardImport, propertyName) {
+	    filteredWildcardImport[propertyName] = wildcardImport[propertyName];
+	    return filteredWildcardImport;
+	  }, {});
+	}
+
 	exports.__get__ = _get__;
 	exports.__GetDependency__ = _get__;
 	exports.__Rewire__ = _set__;
 	exports.__set__ = _set__;
 	exports.__ResetDependency__ = _reset__;
 	exports.__RewireAPI__ = _RewireAPI__;
+
+/***/ },
+/* 574 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.__RewireAPI__ = exports.__ResetDependency__ = exports.__set__ = exports.__Rewire__ = exports.__GetDependency__ = exports.__get__ = undefined;
+
+	var _keys = __webpack_require__(1);
+
+	var _keys2 = _interopRequireDefault(_keys);
+
+	var _typeof2 = __webpack_require__(36);
+
+	var _typeof3 = _interopRequireDefault(_typeof2);
+
+	var _defineProperty = __webpack_require__(73);
+
+	var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+	var _create = __webpack_require__(76);
+
+	var _create2 = _interopRequireDefault(_create);
+
+	exports.fetchTodos = fetchTodos;
+
+	var _reduxActions = __webpack_require__(363);
+
+	var _axios = __webpack_require__(536);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _Todo = __webpack_require__(518);
+
+	var TodoActionTypes = _interopRequireWildcard(_Todo);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var requestData = _get__('createAction')(_get__('TodoActionTypes').REQUEST_DATA);
+	var receiveTodos = _get__('createAction')(_get__('TodoActionTypes').RECEIVE_TODOS);
+
+	function fetchTodos() {
+	  return function (dispatch) {
+	    dispatch(_get__('requestData')());
+	    return _get__('axios').get('/api/todos').then(function (response) {
+	      return dispatch(_get__('receiveTodos')(response.data));
+	    }).catch(function (err) {
+	      return console.log(err);
+	    });
+	  };
+	}
+
+	var _RewiredData__ = (0, _create2.default)(null);
+
+	var INTENTIONAL_UNDEFINED = '__INTENTIONAL_UNDEFINED__';
+	var _RewireAPI__ = {};
+
+	(function () {
+	  function addPropertyToAPIObject(name, value) {
+	    (0, _defineProperty2.default)(_RewireAPI__, name, {
+	      value: value,
+	      enumerable: false,
+	      configurable: true
+	    });
+	  }
+
+	  addPropertyToAPIObject('__get__', _get__);
+	  addPropertyToAPIObject('__GetDependency__', _get__);
+	  addPropertyToAPIObject('__Rewire__', _set__);
+	  addPropertyToAPIObject('__set__', _set__);
+	  addPropertyToAPIObject('__reset__', _reset__);
+	  addPropertyToAPIObject('__ResetDependency__', _reset__);
+	  addPropertyToAPIObject('__with__', _with__);
+	})();
+
+	function _get__(variableName) {
+	  if (_RewiredData__ === undefined || _RewiredData__[variableName] === undefined) {
+	    return _get_original__(variableName);
+	  } else {
+	    var value = _RewiredData__[variableName];
+
+	    if (value === INTENTIONAL_UNDEFINED) {
+	      return undefined;
+	    } else {
+	      return value;
+	    }
+	  }
+	}
+
+	function _get_original__(variableName) {
+	  switch (variableName) {
+	    case 'createAction':
+	      return _reduxActions.createAction;
+
+	    case 'TodoActionTypes':
+	      return _filterWildcardImport__(TodoActionTypes);
+
+	    case 'requestData':
+	      return requestData;
+
+	    case 'axios':
+	      return _axios2.default;
+
+	    case 'receiveTodos':
+	      return receiveTodos;
+	  }
+
+	  return undefined;
+	}
+
+	function _assign__(variableName, value) {
+	  if (_RewiredData__ === undefined || _RewiredData__[variableName] === undefined) {
+	    return _set_original__(variableName, value);
+	  } else {
+	    return _RewiredData__[variableName] = value;
+	  }
+	}
+
+	function _set_original__(variableName, _value) {
+	  switch (variableName) {}
+
+	  return undefined;
+	}
+
+	function _update_operation__(operation, variableName, prefix) {
+	  var oldValue = _get__(variableName);
+
+	  var newValue = operation === '++' ? oldValue + 1 : oldValue - 1;
+
+	  _assign__(variableName, newValue);
+
+	  return prefix ? newValue : oldValue;
+	}
+
+	function _set__(variableName, value) {
+	  if ((typeof variableName === 'undefined' ? 'undefined' : (0, _typeof3.default)(variableName)) === 'object') {
+	    (0, _keys2.default)(variableName).forEach(function (name) {
+	      _RewiredData__[name] = variableName[name];
+	    });
+	  } else {
+	    if (value === undefined) {
+	      _RewiredData__[variableName] = INTENTIONAL_UNDEFINED;
+	    } else {
+	      _RewiredData__[variableName] = value;
+	    }
+
+	    return function () {
+	      _reset__(variableName);
+	    };
+	  }
+	}
+
+	function _reset__(variableName) {
+	  delete _RewiredData__[variableName];
+	}
+
+	function _with__(object) {
+	  var rewiredVariableNames = (0, _keys2.default)(object);
+	  var previousValues = {};
+
+	  function reset() {
+	    rewiredVariableNames.forEach(function (variableName) {
+	      _RewiredData__[variableName] = previousValues[variableName];
+	    });
+	  }
+
+	  return function (callback) {
+	    rewiredVariableNames.forEach(function (variableName) {
+	      previousValues[variableName] = _RewiredData__[variableName];
+	      _RewiredData__[variableName] = object[variableName];
+	    });
+	    var result = callback();
+
+	    if (!!result && typeof result.then == 'function') {
+	      result.then(reset).catch(reset);
+	    } else {
+	      reset();
+	    }
+
+	    return result;
+	  };
+	}
+
+	function _filterWildcardImport__() {
+	  var wildcardImport = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	  var validPropertyNames = (0, _keys2.default)(wildcardImport).filter(function (propertyName) {
+	    return propertyName !== '__get__' && propertyName !== '__set__' && propertyName !== '__reset__' && propertyName !== '__with__' && propertyName !== '__GetDependency__' && propertyName !== '__Rewire__' && propertyName !== '__ResetDependency__' && propertyName !== '__RewireAPI__';
+	  });
+	  return validPropertyNames.reduce(function (filteredWildcardImport, propertyName) {
+	    filteredWildcardImport[propertyName] = wildcardImport[propertyName];
+	    return filteredWildcardImport;
+	  }, {});
+	}
+
+	exports.__get__ = _get__;
+	exports.__GetDependency__ = _get__;
+	exports.__Rewire__ = _set__;
+	exports.__set__ = _set__;
+	exports.__ResetDependency__ = _reset__;
+	exports.__RewireAPI__ = _RewireAPI__;
+	exports.default = _RewireAPI__;
 
 /***/ }
 /******/ ]);

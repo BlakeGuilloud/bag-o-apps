@@ -1,6 +1,8 @@
-import React              from 'react';
-import { connect }        from 'react-redux';
-import { TodoComponent }  from '../components';
+import React                  from 'react';
+import { connect }            from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { TodoComponent }      from '../components';
+import * as TodoActions       from '../actions/Todo.actions';
 
 
 class TodoContainer extends React.Component {
@@ -12,7 +14,12 @@ class TodoContainer extends React.Component {
     editTodo: React.PropTypes.func,
   };
 
+  componentDidMount() {
+    this.props.todoActions.fetchTodos();
+  }
+
   render() {
+    console.log('this props', this.props);
     const props = {};
 
     return (<TodoComponent />);
@@ -20,12 +27,16 @@ class TodoContainer extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const {} = state;
-  return {};
+  const { todo } = state;
+  return {
+    todos: todo.todos,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    todoActions: bindActionCreators(TodoActions, dispatch),
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoContainer);
